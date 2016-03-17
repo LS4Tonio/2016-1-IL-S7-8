@@ -34,23 +34,37 @@ namespace ITI2016.Dev.Tests
             // Speed 3
             s = s.SetGear(CarGear.Third);
             Assert.That(s.GetGear(), Is.EqualTo(CarGear.Third));
-
-            // Speed 5
-            s = s.SetGear(5);
-            Assert.That(s.GetGear(), Is.EqualTo(CarGear.Fifth));
         }
 
         [Test]
         public void CarStatus_status_check()
         {
-            var s = CarStatus.IsRunning;
+            CarStatus s = 0;
+            Assert.That(s.HasStatus(CarStatus.IsRunning), Is.False, "not running");
+            Assert.That(s.HasStatus(CarStatus.IsClutchPedal), Is.False, "cluthch pedal false");
+
+            s = CarStatus.IsRunning;
             Assert.That(s.HasStatus(CarStatus.IsRunning), Is.True, "running");
 
-            s = s | CarStatus.IsBrakePedal;
-            Assert.That(s.HasStatus(CarStatus.IsBrakePedal), Is.True, "brake pedal");
+            s = CarStatus.IsRunning | CarStatus.IsBrakePedal;
+            Assert.That(s.HasStatus(CarStatus.IsBrakePedal), Is.True, "brake pedal true");
 
-            s = s.ToggleStatus(CarStatus.IsBrakePedal);
-            Assert.That(s.HasStatus(CarStatus.IsBrakePedal), Is.False, "brake pedal");
+            s = CarStatus.IsRunning | CarStatus.IsClutchPedal | CarStatus.IsHandBrake;
+            Assert.That(s.HasStatus(CarStatus.IsBrakePedal), Is.False, "brake pedal false");
+            Assert.That(s.HasStatus(CarStatus.IsHandBrake), Is.True, "hand break true");
+        }
+
+        [Test]
+        public void CarStatus_status_toggle()
+        {
+            var s = CarStatus.IsRunning;
+
+            s = s.ToggleStatus(CarStatus.IsHandBrake);
+            Assert.That(s.HasFlag(CarStatus.IsHandBrake), Is.True, "hand brake true");
+
+            s = s.ToggleStatus(CarStatus.IsBrakePedal).ToggleStatus(CarStatus.IsHandBrake);
+            Assert.That(s.HasFlag(CarStatus.IsHandBrake), Is.False);
+            Assert.That(s.HasFlag(CarStatus.IsBrakePedal), Is.True);
         }
     }
 }
