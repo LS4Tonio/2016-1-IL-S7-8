@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI2016.Dev.Tests
 {
@@ -15,12 +11,12 @@ namespace ITI2016.Dev.Tests
         {
             CarStatus s = CarStatus.IsRunning | CarStatus.IsBrakePedal;
 
-            Assert.That( (s & CarStatus.IsRunning) != 0, "The Car is running!" );
-            Assert.That( (s & CarStatus.IsClutchPedal) == 0, "The Clutch pedal is NOT pressed!" );
+            Assert.That((s & CarStatus.IsRunning) != 0, "The Car is running!");
+            Assert.That((s & CarStatus.IsClutchPedal) == 0, "The Clutch pedal is NOT pressed!");
 
             // Now we want to stop the car...
             s = s & ~CarStatus.IsRunning;
-            Assert.That( (s & CarStatus.IsRunning) == 0, "The Car is NO MORE running!" );
+            Assert.That((s & CarStatus.IsRunning) == 0, "The Car is NO MORE running!");
         }
 
         [Test]

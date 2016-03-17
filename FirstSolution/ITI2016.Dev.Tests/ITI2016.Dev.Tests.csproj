@@ -45,7 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarStatusTests.cs" />
-    <Compile Include="MyVeryFirstTests.cs" />
+    <Compile Include="ExceptionChecker.cs" />
+    <Compile Include="Ipv4Tests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

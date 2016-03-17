@@ -20,7 +20,7 @@ namespace ITI2016.Dev
         IsHandBrake = 1 << 4,
         GearMask = 7 << 5
     }
-    
+
     /// <summary>
     /// The differents gear of the car.
     /// </summary>
@@ -34,7 +34,7 @@ namespace ITI2016.Dev
         Fifth = 5,
         Backward = 6
     }
-    
+
     public static class CarStatusExtension
     {
         /// <summary>

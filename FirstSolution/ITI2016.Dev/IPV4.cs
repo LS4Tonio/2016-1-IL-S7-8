@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI2016.Dev
 {
-
     public struct IPV4
     {
         readonly int _address;
 
-        public IPV4( int ipAddress )
+        public IPV4(int ipAddress)
         {
             _address = ipAddress;
         }
 
-        public IPV4( byte hiByte, byte hiLoByte, byte loHiByte, byte loByte )
+        public IPV4(byte hiByte, byte hiLoByte, byte loHiByte, byte loByte)
         {
             _address = (hiByte << 24) | (hiLoByte << 16) | (loHiByte << 8) | loByte;
         }
@@ -25,22 +20,22 @@ namespace ITI2016.Dev
         {
             get
             {
-                if( i < 0 || i > 3 ) throw new IndexOutOfRangeException();
+                if (i < 0 || i > 3) throw new IndexOutOfRangeException();
                 return (_address >> (i * 8)) & 0xFF;
             }
         }
 
-        public IPV4 SetByte( int index, byte value )
+        public IPV4 SetByte(int index, byte value)
         {
-            if( index < 0 | index > 3 ) throw new IndexOutOfRangeException();
+            if (index < 0 | index > 3) throw new IndexOutOfRangeException();
             index <<= 3;
-            return new IPV4( (_address & ~(0xFF << index)) | (value << index) );
+            return new IPV4((_address & ~(0xFF << index)) | (value << index));
         }
 
-        public IPV4 ClearByte( int index )
+        public IPV4 ClearByte(int index)
         {
-            if( index < 0 | index > 3 ) throw new IndexOutOfRangeException();
-            return new IPV4( _address & ~(0xFF << (index * 8)) );
+            if (index < 0 | index > 3) throw new IndexOutOfRangeException();
+            return new IPV4(_address & ~(0xFF << (index * 8)));
         }
 
         // Version 0:
@@ -64,6 +59,4 @@ namespace ITI2016.Dev
         // Version 3:
         public override string ToString() => $"{this[3]}.{this[2]}.{this[1]}.{this[0]}";
     }
-
 }
-
