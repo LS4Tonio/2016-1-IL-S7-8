@@ -92,10 +92,48 @@ namespace ITI2016.Dev.Tests
         }
 
         [Test]
-        public void Check_that_index_is_controlled_with_templatingPattern()
+        public void Check_that_index_is_controlled_with_templatingPattern_1()
         {
             new IndexControl1().Run();
             new IndexControl2().Run();
+        }
+
+        [Test]
+        public void Check_that_index_is_controlled_with_templatingPattern_2()
+        {
+            AssertThrows<IndexOutOfRangeException>(TestGetter);
+            AssertThrows<IndexOutOfRangeException>(TestSetter);
+        }
+
+        [Test]
+        public void Check_that_index_is_controlled_with_templatingPattern_3()
+        {
+            AssertThrows<IndexOutOfRangeException>(delegate { var x = new IPV4(78945)[5]; });
+            AssertThrows<IndexOutOfRangeException>(delegate { new IPV4(78945).SetByte(-1, 78); });
+        }
+
+        private void AssertThrows<T>(Action throwsException)
+            where T : Exception
+        {
+            try
+            {
+                throwsException();
+                var msg = String.Format("This SHOULD have thrown a {0}", typeof(T).Name);
+                throw new AssertionException(msg);
+            }
+            catch (T)
+            {
+            }
+        }
+
+        private void TestGetter()
+        {
+            var x = new IPV4(78945)[5];
+        }
+
+        private void TestSetter()
+        {
+            new IPV4(78945).SetByte(-1, 78);
         }
     }
 }
