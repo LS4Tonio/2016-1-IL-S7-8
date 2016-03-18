@@ -19,12 +19,12 @@ namespace ITI2016.Dev
         {
             get
             {
-                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
+                if (i < 0 || i >= _count) throw new IndexOutOfRangeException();
                 return _array[i];
             }
             set
             {
-                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
+                if (i < 0 || i >= _count) throw new IndexOutOfRangeException();
                 _array[i] = value;
             }
         }
@@ -88,8 +88,15 @@ namespace ITI2016.Dev
         private readonly List<T> _list;
         private int _currentIndex;
 
-        public T Current => _list[_currentIndex];
-        
+        public T Current
+        {
+            get
+            {
+                if (_currentIndex < 0 || _currentIndex >= _list.Count) throw new InvalidOperationException();
+                return _list[_currentIndex];
+            }
+        }
+
         public ListEnumerator(List<T> list)
         {
             _list = list;

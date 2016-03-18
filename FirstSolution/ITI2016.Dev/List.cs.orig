@@ -19,12 +19,20 @@ namespace ITI2016.Dev
         {
             get
             {
+<<<<<<< HEAD
                 if (i < 0 || i >= _count) throw new InvalidOperationException();
+=======
+                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
+>>>>>>> spi/master
                 return _array[i];
             }
             set
             {
+<<<<<<< HEAD
                 if (i < 0 || i >= _count) throw new InvalidOperationException();
+=======
+                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
+>>>>>>> spi/master
                 _array[i] = value;
             }
         }
@@ -33,29 +41,9 @@ namespace ITI2016.Dev
 
         public void Add(T e)
         {
-<<<<<<< HEAD
             EnsureEnoughSpace();
             Debug.Assert(_count < _array.Length);
             _array[_count++] = e;
-=======
-            Debug.Assert( _count <= _array.Length, "This is an INVARIANT !!!!!!!" );
-            EnsureEnoughSpace();
-            _array[_count++] = e;
-        }
-
-        private void EnsureEnoughSpace()
-        {
-            if( _count == _array.Length )
-            {
-                T[] t = new T[_count + 1];
-                for( int i = 0; i < _count; ++i )
-                {
-                    t[i] = _array[i];
-                }
-                _array = t;
-            }
-            Debug.Assert( _count < _array.Length );
->>>>>>> spi/master
         }
 
         public void Clear()
@@ -85,7 +73,7 @@ namespace ITI2016.Dev
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new ListEnumerator<T>(_array);
+            return new ListEnumerator<T>(this);
         }
 
         private void EnsureEnoughSpace()
@@ -101,34 +89,35 @@ namespace ITI2016.Dev
                 }
                 _array = t;
             }
+        }
+    }
+
+    public class ListEnumerator<T> : IEnumerator<T>
+    {
+        private readonly List<T> _list;
+        private int _currentIndex;
+
+        public T Current => _list[_currentIndex];
+        
+        public ListEnumerator(List<T> list)
+        {
+            _list = list;
+            _currentIndex = -1;
 =======
-            if( i < 0 || i > _count ) throw new InvalidOperationException();
+            if( i < 0 || i > _count ) throw new IndexOutOfRangeException();
             EnsureEnoughSpace();
             int lenToCopy = _count++ - i;
             if( lenToCopy > 0 ) Array.Copy( _array, i, _array, i + 1, lenToCopy );
             _array[i] = e;
 >>>>>>> spi/master
         }
-    }
-
-    public class ListEnumerator<T> : IEnumerator<T>
-    {
-        private readonly T[] _array;
-        private int _currentIndex;
-
-        public T Current => _array[_currentIndex];
-
-        public ListEnumerator(T[] array)
-        {
-            _array = array;
-        } 
 
         public bool MoveNext()
         {
 <<<<<<< HEAD
-            return (++_currentIndex < _array.Length);
+            return (_currentIndex > -1 && _currentIndex++ < _list.Count);
 =======
-            if( i < 0 || i >= _count ) throw new InvalidOperationException();
+            if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
             Debug.Assert( _count >= 1 );
             Array.Copy( _array, i + 1, _array, i, --_count - i );
             _array[_count] = default( T );
