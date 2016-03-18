@@ -85,7 +85,7 @@ namespace ITI2016.Dev
 
     public class ListEnumerator<T> : IEnumerator<T>
     {
-        private readonly List<T> _list;
+        private readonly IReadOnlyList<T> _list;
         private int _currentIndex;
 
         public T Current
@@ -97,7 +97,7 @@ namespace ITI2016.Dev
             }
         }
 
-        public ListEnumerator(List<T> list)
+        public ListEnumerator(IReadOnlyList<T> list)
         {
             _list = list;
             _currentIndex = -1;
