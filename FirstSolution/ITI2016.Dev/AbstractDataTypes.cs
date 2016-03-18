@@ -1,8 +1,5 @@
-﻿using System;
-
-namespace ITI2016.Dev
+﻿namespace ITI2016.Dev
 {
-
     public interface IEnumerable<T>
     {
         IEnumerator<T> GetEnumerator();
@@ -52,6 +49,5 @@ namespace ITI2016.Dev
         bool HasNext();
 
         T GetNext();
-
     }
 }

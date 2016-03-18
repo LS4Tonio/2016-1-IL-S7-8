@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ITI2016.Dev
 {
@@ -16,7 +12,6 @@ namespace ITI2016.Dev
         {
             _array = new T[4];
         }
-
 
         public T this[int i]
         {
@@ -60,17 +55,17 @@ namespace ITI2016.Dev
             _count = 0;
         }
 
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
         public void InsertAt( int i, T e )
         {
             throw new NotImplementedException();
         }
 
         public void RemoveAt( int i )
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerator<T> GetEnumerator()
         {
             throw new NotImplementedException();
         }
