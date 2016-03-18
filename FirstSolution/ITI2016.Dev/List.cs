@@ -83,7 +83,7 @@ namespace ITI2016.Dev
         }
     }
 
-    public class ListEnumerator<T> : IEnumerator<T>
+    class ListEnumerator<T> : IEnumerator<T>
     {
         private readonly IReadOnlyList<T> _list;
         private int _currentIndex;
