@@ -5,69 +5,99 @@ namespace ITI2016.Dev
 {
     public class List<T> : IList<T>
     {
-        T[] _array;
-        int _count;
+        private const int InitialSizeArray = 4;
+
+        private T[] _array;
+        private int _count;
 
         public List()
         {
-            _array = new T[4];
+            _array = new T[InitialSizeArray];
         }
 
         public T this[int i]
         {
             get
             {
-                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                if (i < 0 || i >= _count) throw new InvalidOperationException();
                 return _array[i];
             }
-
             set
             {
-                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                if (i < 0 || i >= _count) throw new InvalidOperationException();
                 _array[i] = value;
             }
         }
 
         public int Count => _count;
 
-        public void Add( T e )
+        public void Add(T e)
         {
-            Debug.Assert( _count <= _array.Length, "This is an INVARIANT !!!!!!!" );
-            if( _count == _array.Length )
-            {
-                T[] t = new T[_count + 1];
-                for( int i = 0; i < _count; ++i )
-                {
-                    t[i] = _array[i];
-                }
-                _array = t;
-            }
-            Debug.Assert( _count < _array.Length );
+            EnsureEnoughSpace();
+            Debug.Assert(_count < _array.Length);
             _array[_count++] = e;
         }
 
         public void Clear()
         {
-            if( !typeof(T).IsValueType )
+            if (!typeof(T).IsValueType)
             {
-                for( int i = 0; i < _count; ++i ) _array[i] = default(T);
+                for (var i = 0; i < _count; ++i) _array[i] = default(T);
             }
             _count = 0;
         }
 
-        public void InsertAt( int i, T e )
+        public void InsertAt(int i, T e)
         {
-            throw new NotImplementedException();
+            if (i < 0 || i > _count) throw new IndexOutOfRangeException();
+            EnsureEnoughSpace();
+            var lengthToMove = _count++ - i;
+            if (lengthToMove > 0) Array.Copy(_array, i, _array, i + 1, lengthToMove);
+            _array[i] = e;
         }
 
-        public void RemoveAt( int i )
+        public void RemoveAt(int i)
         {
-            throw new NotImplementedException();
+            if (i < 0 || i >= _count) throw new IndexOutOfRangeException();
+            Array.Copy(_array, i + 1, _array, i, --_count - i);
+            _array[_count] = default(T);
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            throw new NotImplementedException();
+            return new ListEnumerator<T>(_array);
+        }
+
+        private void EnsureEnoughSpace()
+        {
+            Debug.Assert(_count <= _array.Length, "This is an INVARIANT !!!!!!!");
+            if (_count == _array.Length)
+            {
+                var t = new T[_count + 1];
+                for (var i = 0; i < _count; ++i)
+                {
+                    t[i] = _array[i];
+                }
+                _array = t;
+            }
+        }
+    }
+
+    public class ListEnumerator<T> : IEnumerator<T>
+    {
+        private readonly T[] _array;
+        private int _currentIndex;
+
+        public T Current => _array[_currentIndex];
+
+        public ListEnumerator(T[] array)
+        {
+            _array = array;
+        } 
+
+        public bool MoveNext()
+        {
+            return (++_currentIndex < _array.Length);
         }
     }
 }
