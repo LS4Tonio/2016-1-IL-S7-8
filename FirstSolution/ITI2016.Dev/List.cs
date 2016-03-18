@@ -19,12 +19,12 @@ namespace ITI2016.Dev
         {
             get
             {
-                if (i < 0 || i >= _count) throw new InvalidOperationException();
+                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
                 return _array[i];
             }
             set
             {
-                if (i < 0 || i >= _count) throw new InvalidOperationException();
+                if( i < 0 || i >= _count ) throw new IndexOutOfRangeException();
                 _array[i] = value;
             }
         }
