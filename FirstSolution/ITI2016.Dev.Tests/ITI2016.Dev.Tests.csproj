@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AbstractDataTypes.cs" />
     <Compile Include="CarStatusTests.cs" />
     <Compile Include="ExceptionChecker.cs" />
     <Compile Include="Ipv4Tests.cs" />
