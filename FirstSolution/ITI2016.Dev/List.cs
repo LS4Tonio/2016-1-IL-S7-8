@@ -65,7 +65,7 @@ namespace ITI2016.Dev
 
         public IEnumerator<T> GetEnumerator()
         {
-            return new ListEnumerator<T>(_array);
+            return new ListEnumerator<T>(this);
         }
 
         private void EnsureEnoughSpace()
@@ -85,19 +85,20 @@ namespace ITI2016.Dev
 
     public class ListEnumerator<T> : IEnumerator<T>
     {
-        private readonly T[] _array;
+        private readonly List<T> _list;
         private int _currentIndex;
 
-        public T Current => _array[_currentIndex];
-
-        public ListEnumerator(T[] array)
+        public T Current => _list[_currentIndex];
+        
+        public ListEnumerator(List<T> list)
         {
-            _array = array;
-        } 
+            _list = list;
+            _currentIndex = -1;
+        }
 
         public bool MoveNext()
         {
-            return (++_currentIndex < _array.Length);
+            return (_currentIndex > -1 && _currentIndex++ < _list.Count);
         }
     }
 }

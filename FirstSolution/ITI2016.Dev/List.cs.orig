@@ -1,119 +1,50 @@
 ﻿using System;
-<<<<<<< HEAD
 using System.Diagnostics;
-=======
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
->>>>>>> spi/master
 
 namespace ITI2016.Dev
 {
     public class List<T> : IList<T>
     {
-<<<<<<< HEAD
-        private const int InitialSize = 4;
+        private const int InitialSizeArray = 4;
 
         private T[] _array;
         private int _count;
 
-        #region PROPERTIES
-
-        /// <summary>
-        /// Counts the number of elements in the list.
-        /// </summary>
-        public int Count => _count;
-
-        /// <summary>
-        /// Gets the elements at the specified index.
-        /// </summary>
-        /// <param name="index">Index of the element to get.</param>
-        /// <exception cref="IndexOutOfRangeException"></exception>
-        /// <returns>The element found.</returns>
-        public T this[int index]
-        {
-            get
-            {
-                if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
-                return _array[index];
-            }
-            set
-            {
-                if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
-                _array[index] = value;
-            }
-        }
-
-        #endregion
-
-        #region CONSTRUCTOR
-
-        /// <summary>
-        /// Instanciates a new reference of the list.
-        /// </summary>
         public List()
         {
-            _array = new T[InitialSize];
+            _array = new T[InitialSizeArray];
         }
-
-        #endregion
-
-        #region PUBLIC METHODS
-
-        /// <summary>
-        /// Adds an item at the end of the list.
-        /// </summary>
-        /// <param name="item">Element to add.</param>
-        public void Add(T item)
-        {
-            if(_count == _array.Length)
-            {
-                var array = new T[_array.Length + 1];
-                Array.Copy(_array, array, _array.Length);
-                _array = array;
-            }
-            Debug.Assert(_count < _array.Length, "The count must be lower than the array's length");
-            this[_count++] = item;
-        }
-
-        /// <summary>
-        /// Inserts an element in the list at the given position.
-        /// </summary>
-        /// <param name="index">Index of the element to insert.</param>
-        /// <param name="item">Element to insert.</param>
-        public void InsertAt(int index, T item)
-=======
-        T[] _array;
-        int _count;
-
-        public List()
-        {
-            _array = new T[4];
-        }
-
 
         public T this[int i]
         {
             get
             {
-                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                if (i < 0 || i >= _count) throw new InvalidOperationException();
                 return _array[i];
             }
-
             set
             {
-                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                if (i < 0 || i >= _count) throw new InvalidOperationException();
                 _array[i] = value;
             }
         }
 
         public int Count => _count;
 
-        public void Add( T e )
+        public void Add(T e)
         {
+<<<<<<< HEAD
+            EnsureEnoughSpace();
+            Debug.Assert(_count < _array.Length);
+            _array[_count++] = e;
+=======
             Debug.Assert( _count <= _array.Length, "This is an INVARIANT !!!!!!!" );
+            EnsureEnoughSpace();
+            _array[_count++] = e;
+        }
+
+        private void EnsureEnoughSpace()
+        {
             if( _count == _array.Length )
             {
                 T[] t = new T[_count + 1];
@@ -124,57 +55,84 @@ namespace ITI2016.Dev
                 _array = t;
             }
             Debug.Assert( _count < _array.Length );
-            _array[_count++] = e;
+>>>>>>> spi/master
         }
 
         public void Clear()
         {
-            if( !typeof(T).IsValueType )
+            if (!typeof(T).IsValueType)
             {
-                for( int i = 0; i < _count; ++i ) _array[i] = default(T);
+                for (var i = 0; i < _count; ++i) _array[i] = default(T);
             }
             _count = 0;
         }
 
+        public void InsertAt(int i, T e)
+        {
+            if (i < 0 || i > _count) throw new IndexOutOfRangeException();
+            EnsureEnoughSpace();
+            var lengthToMove = _count++ - i;
+            if (lengthToMove > 0) Array.Copy(_array, i, _array, i + 1, lengthToMove);
+            _array[i] = e;
+        }
+
+        public void RemoveAt(int i)
+        {
+            if (i < 0 || i >= _count) throw new IndexOutOfRangeException();
+            Array.Copy(_array, i + 1, _array, i, --_count - i);
+            _array[_count] = default(T);
+        }
+
         public IEnumerator<T> GetEnumerator()
->>>>>>> spi/master
         {
-            throw new NotImplementedException();
+            return new ListEnumerator<T>(_array);
         }
 
-<<<<<<< HEAD
-        public void RemoveAt(int index)
-=======
-        public void InsertAt( int i, T e )
->>>>>>> spi/master
+        private void EnsureEnoughSpace()
         {
-            throw new NotImplementedException();
-        }
-
 <<<<<<< HEAD
-        /// <summary>
-        /// Clears the values of the list.
-        /// </summary>
-        public void Clear()
-        {
-            if (typeof (T).IsValueType)
+            Debug.Assert(_count <= _array.Length, "This is an INVARIANT !!!!!!!");
+            if (_count == _array.Length)
             {
-                for (var i = 0; i < _array.Length; i++) _array[i] = default(T);
+                var t = new T[_count + 1];
+                for (var i = 0; i < _count; ++i)
+                {
+                    t[i] = _array[i];
+                }
+                _array = t;
             }
-            _count = 0;
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            throw new NotImplementedException();
-        }
-
-        #endregion
 =======
-        public void RemoveAt( int i )
-        {
-            throw new NotImplementedException();
-        }
+            if( i < 0 || i > _count ) throw new InvalidOperationException();
+            EnsureEnoughSpace();
+            int lenToCopy = _count++ - i;
+            if( lenToCopy > 0 ) Array.Copy( _array, i, _array, i + 1, lenToCopy );
+            _array[i] = e;
 >>>>>>> spi/master
+        }
+    }
+
+    public class ListEnumerator<T> : IEnumerator<T>
+    {
+        private readonly T[] _array;
+        private int _currentIndex;
+
+        public T Current => _array[_currentIndex];
+
+        public ListEnumerator(T[] array)
+        {
+            _array = array;
+        } 
+
+        public bool MoveNext()
+        {
+<<<<<<< HEAD
+            return (++_currentIndex < _array.Length);
+=======
+            if( i < 0 || i >= _count ) throw new InvalidOperationException();
+            Debug.Assert( _count >= 1 );
+            Array.Copy( _array, i + 1, _array, i, --_count - i );
+            _array[_count] = default( T );
+>>>>>>> spi/master
+        }
     }
 }
