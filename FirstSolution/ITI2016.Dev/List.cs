@@ -73,7 +73,8 @@ namespace ITI2016.Dev
             Debug.Assert(_count <= _array.Length, "This is an INVARIANT !!!!!!!");
             if (_count == _array.Length)
             {
-                var t = new T[_count + 1];
+                //var t = new T[_count + 1];
+                var t = new T[_count * 2];
                 for (var i = 0; i < _count; ++i)
                 {
                     t[i] = _array[i];

@@ -1,4 +1,7 @@
-﻿namespace ITI2016.Dev
+﻿using System;
+using System.Runtime.CompilerServices;
+
+namespace ITI2016.Dev
 {
     public interface IEnumerable<T>
     {
@@ -49,5 +52,30 @@
         bool HasNext();
 
         T GetNext();
+    }
+
+    public interface IDictionary<TKey, TValue> : IReadOnlyCollection<KeyValuePair<TKey, TValue>>
+    {
+        TValue this[TKey key] { get; set; }
+        IEnumerable<TKey> Keys { get; }
+        IEnumerable<TValue> Values { get; }
+
+        Boolean ContainsKey(TKey key);
+        Boolean ContainsValue(TValue value);
+        TValue GetValue(TKey key);
+        void Add(TKey key, TValue value);
+        Boolean Remove(TKey key);
+    }
+
+    public struct KeyValuePair<TKey, TValue>
+    {
+        public readonly TKey Key;
+        public readonly TValue Value;
+
+        public KeyValuePair(TKey key, TValue value)
+        {
+            Key = key;
+            Value = value;
+        }
     }
 }
