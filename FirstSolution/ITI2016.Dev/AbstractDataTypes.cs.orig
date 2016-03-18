@@ -1,7 +1,29 @@
 ﻿using System;
+<<<<<<< HEAD
 
 namespace ITI2016.Dev
 {
+    public interface IEnumerator<T>
+    {
+        T Current { get; }
+
+        Boolean MoveNext();
+    }
+
+    public interface IEnumeratorJava<T>
+    {
+        Boolean HasNext();
+        T GetNext();
+    }
+=======
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ITI2016.Dev
+{
+>>>>>>> spi/master
 
     public interface IEnumerable<T>
     {
@@ -10,16 +32,31 @@ namespace ITI2016.Dev
 
     public interface IReadOnlyCollection<T> : IEnumerable<T>
     {
+<<<<<<< HEAD
+        Int32 Count { get; }
+=======
         int Count { get; }
+>>>>>>> spi/master
     }
 
     public interface IReadOnlyList<T> : IReadOnlyCollection<T>
     {
+<<<<<<< HEAD
+        T this[Int32 index] { get; }
+=======
         T this[int i] { get; }
+>>>>>>> spi/master
     }
 
     public interface IList<T> : IReadOnlyList<T>
     {
+<<<<<<< HEAD
+        new T this[Int32 index] { get; set; }
+
+        void Add(T item);
+        void InsertAt(Int32 index, T item);
+        void RemoveAt(Int32 index);
+=======
         new T this[int i] { get; set; }
 
         void Add( T e );
@@ -28,11 +65,19 @@ namespace ITI2016.Dev
 
         void RemoveAt( int i );
 
+>>>>>>> spi/master
         void Clear();
     }
 
     public interface ISet<T> : IReadOnlyCollection<T>
     {
+<<<<<<< HEAD
+        void Add(T item);
+        void Contains(T item);
+        void Remove(T item);
+    }
+}
+=======
         void Add( T e );
 
         bool Contains( T e );
@@ -54,4 +99,8 @@ namespace ITI2016.Dev
         T GetNext();
 
     }
+
+
+
 }
+>>>>>>> spi/master

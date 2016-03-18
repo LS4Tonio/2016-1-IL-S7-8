@@ -1,97 +1,61 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ITI2016.Dev
 {
     public class List<T> : IList<T>
     {
-        private const int InitialSize = 4;
+        T[] _array;
+        int _count;
 
-        private T[] _array;
-        private int _count;
+        public List()
+        {
+            _array = new T[4];
+        }
 
-        #region PROPERTIES
 
-        /// <summary>
-        /// Counts the number of elements in the list.
-        /// </summary>
-        public int Count => _count;
-
-        /// <summary>
-        /// Gets the elements at the specified index.
-        /// </summary>
-        /// <param name="index">Index of the element to get.</param>
-        /// <exception cref="IndexOutOfRangeException"></exception>
-        /// <returns>The element found.</returns>
-        public T this[int index]
+        public T this[int i]
         {
             get
             {
-                if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
-                return _array[index];
+                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                return _array[i];
             }
+
             set
             {
-                if (index < 0 || index >= _count) throw new IndexOutOfRangeException();
-                _array[index] = value;
+                if( i < 0 || i >= _count ) throw new InvalidOperationException();
+                _array[i] = value;
             }
         }
 
-        #endregion
+        public int Count => _count;
 
-        #region CONSTRUCTOR
-
-        /// <summary>
-        /// Instanciates a new reference of the list.
-        /// </summary>
-        public List()
+        public void Add( T e )
         {
-            _array = new T[InitialSize];
-        }
-
-        #endregion
-
-        #region PUBLIC METHODS
-
-        /// <summary>
-        /// Adds an item at the end of the list.
-        /// </summary>
-        /// <param name="item">Element to add.</param>
-        public void Add(T item)
-        {
-            if(_count == _array.Length)
+            Debug.Assert( _count <= _array.Length, "This is an INVARIANT !!!!!!!" );
+            if( _count == _array.Length )
             {
-                var array = new T[_array.Length + 1];
-                Array.Copy(_array, array, _array.Length);
-                _array = array;
+                T[] t = new T[_count + 1];
+                for( int i = 0; i < _count; ++i )
+                {
+                    t[i] = _array[i];
+                }
+                _array = t;
             }
-            Debug.Assert(_count < _array.Length, "The count must be lower than the array's length");
-            this[_count++] = item;
+            Debug.Assert( _count < _array.Length );
+            _array[_count++] = e;
         }
 
-        /// <summary>
-        /// Inserts an element in the list at the given position.
-        /// </summary>
-        /// <param name="index">Index of the element to insert.</param>
-        /// <param name="item">Element to insert.</param>
-        public void InsertAt(int index, T item)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Clears the values of the list.
-        /// </summary>
         public void Clear()
         {
-            if (typeof (T).IsValueType)
+            if( !typeof(T).IsValueType )
             {
-                for (var i = 0; i < _array.Length; i++) _array[i] = default(T);
+                for( int i = 0; i < _count; ++i ) _array[i] = default(T);
             }
             _count = 0;
         }
@@ -101,6 +65,14 @@ namespace ITI2016.Dev
             throw new NotImplementedException();
         }
 
-        #endregion
+        public void InsertAt( int i, T e )
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveAt( int i )
+        {
+            throw new NotImplementedException();
+        }
     }
 }
